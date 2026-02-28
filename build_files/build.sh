@@ -36,9 +36,10 @@ dnf5 install -y \
 dnf5 -y copr disable wezfurlong/wezterm-nightly
 
 # ── OpenClaw CLI ──────────────────────────────────────────────────────────────
-mkdir -p /var/opt/openclaw
-npm install --prefix /var/opt/openclaw openclaw
-ln -sf /var/opt/openclaw/node_modules/.bin/openclaw /usr/bin/openclaw
+export HOME=/tmp/npm-home
+mkdir -p /tmp/npm-home /usr/lib/openclaw
+npm install --prefix /usr/lib/openclaw openclaw
+ln -sf /usr/lib/openclaw/node_modules/.bin/openclaw /usr/bin/openclaw
 
 # ── Deutsche Lokalisierung ────────────────────────────────────────────────────
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
