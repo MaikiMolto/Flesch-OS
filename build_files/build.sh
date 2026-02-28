@@ -5,40 +5,7 @@
 
 set -ouex pipefail
 
-# ── RPM Packages (System-Level) ──────────────────────────────────────────────
-
-dnf5 install -y \
-    # Terminal
-    wezterm \
-    # Dateimanager
-    krusader \
-    # Media
-    vlc \
-    # Razer Hardware Support
-    openrazer-daemon \
-    polychromatic \
-    # Nvidia GPU Tools
-    corectrl \
-    # KDE Connect (Handy ↔ PC)
-    kdeconnect \
-    # Dev Tools
-    git \
-    nodejs \
-    # SSH Server
-    openssh-server \
-    # Gaming
-    lutris \
-    # System Tools
-    htop \
-    btop
-
-# ── Razer udev Rules ─────────────────────────────────────────────────────────
-gpasswd -a $USER plugdev 2>/dev/null || true
-
-# ── SSH Server aktivieren ────────────────────────────────────────────────────
-systemctl enable sshd
-
-# ── VS Code (Microsoft Repo) ─────────────────────────────────────────────────
+# ── VS Code Repo hinzufügen ───────────────────────────────────────────────────
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 cat <<EOF > /etc/yum.repos.d/vscode.repo
 [code]
@@ -48,12 +15,30 @@ enabled=1
 gpgcheck=1
 gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
-dnf5 install -y code
+
+# ── RPM Packages installieren ────────────────────────────────────────────────
+dnf5 install -y \
+    wezterm \
+    krusader \
+    vlc \
+    openrazer-daemon \
+    polychromatic \
+    corectrl \
+    kdeconnect \
+    git \
+    nodejs \
+    openssh-server \
+    lutris \
+    htop \
+    btop \
+    code
 
 # ── OpenClaw CLI ─────────────────────────────────────────────────────────────
 npm install -g openclaw
 
-# ── Flatpaks werden über flatpaks.txt installiert (post-install) ─────────────
-# Siehe: /usr/share/flesch-os/flatpaks.txt
+# ── SSH Server aktivieren ────────────────────────────────────────────────────
+systemctl enable sshd
+
+# ── Flatpak-Liste für post-install kopieren ──────────────────────────────────
 mkdir -p /usr/share/flesch-os
 cp /ctx/flatpaks.txt /usr/share/flesch-os/flatpaks.txt
