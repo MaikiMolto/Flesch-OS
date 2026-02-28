@@ -18,16 +18,12 @@ EOF
 
 # ── WezTerm COPR ──────────────────────────────────────────────────────────────
 dnf5 -y copr enable wezfurlong/wezterm-nightly
-# ── OpenRazer COPR ────────────────────────────────────────────────────────────
-dnf5 -y copr enable matte-schwartz/openrazer
 
 # ── RPM Packages ──────────────────────────────────────────────────────────────
 dnf5 install -y \
     wezterm \
     krusader \
     vlc \
-    openrazer-daemon \
-    openrazer-driver-dkms \
     corectrl \
     kde-connect \
     git \
@@ -37,7 +33,6 @@ dnf5 install -y \
 
 # ── COPRs wieder deaktivieren ─────────────────────────────────────────────────
 dnf5 -y copr disable wezfurlong/wezterm-nightly
-dnf5 -y copr disable matte-schwartz/openrazer
 
 # ── OpenClaw CLI ──────────────────────────────────────────────────────────────
 npm install -g openclaw
