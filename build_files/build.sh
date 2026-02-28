@@ -28,6 +28,7 @@ dnf5 install -y \
     kde-connect \
     git \
     nodejs \
+    npm \
     htop \
     code
 
