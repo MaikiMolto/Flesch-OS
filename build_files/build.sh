@@ -5,7 +5,7 @@
 
 set -ouex pipefail
 
-# ── VS Code Repo hinzufügen ───────────────────────────────────────────────────
+# ── VS Code Repo ──────────────────────────────────────────────────────────────
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 cat <<EOF > /etc/yum.repos.d/vscode.repo
 [code]
@@ -16,29 +16,35 @@ gpgcheck=1
 gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
 
-# ── RPM Packages installieren ────────────────────────────────────────────────
+# ── WezTerm COPR ──────────────────────────────────────────────────────────────
+dnf5 -y copr enable wezfurlong/wezterm-nightly
+# ── OpenRazer COPR ────────────────────────────────────────────────────────────
+dnf5 -y copr enable matte-schwartz/openrazer
+
+# ── RPM Packages ──────────────────────────────────────────────────────────────
 dnf5 install -y \
     wezterm \
     krusader \
     vlc \
     openrazer-daemon \
-    polychromatic \
+    openrazer-driver-dkms \
     corectrl \
-    kdeconnect \
+    kde-connect \
     git \
     nodejs \
-    openssh-server \
-    lutris \
     htop \
-    btop \
     code
 
-# ── OpenClaw CLI ─────────────────────────────────────────────────────────────
+# ── COPRs wieder deaktivieren ─────────────────────────────────────────────────
+dnf5 -y copr disable wezfurlong/wezterm-nightly
+dnf5 -y copr disable matte-schwartz/openrazer
+
+# ── OpenClaw CLI ──────────────────────────────────────────────────────────────
 npm install -g openclaw
 
-# ── SSH Server aktivieren ────────────────────────────────────────────────────
+# ── SSH Server aktivieren ─────────────────────────────────────────────────────
 systemctl enable sshd
 
-# ── Flatpak-Liste für post-install kopieren ──────────────────────────────────
+# ── Flatpak-Liste kopieren ────────────────────────────────────────────────────
 mkdir -p /usr/share/flesch-os
 cp /ctx/flatpaks.txt /usr/share/flesch-os/flatpaks.txt

@@ -17,12 +17,13 @@ net.davidotek.pupgui2
 
 # ── System & Tools ───────────────────────────────────────────────────────────
 com.github.tchx84.Flatseal
-io.github.lainsce.Colorway
 org.kde.filelight
-com.github.unrud.VideoDownloader
 
 # ── Media ────────────────────────────────────────────────────────────────────
 org.videolan.VLC
 
 # ── Nvidia ───────────────────────────────────────────────────────────────────
 com.leinardi.gwe
+
+# ── Razer GUI ────────────────────────────────────────────────────────────────
+org.polychromatic.controller
