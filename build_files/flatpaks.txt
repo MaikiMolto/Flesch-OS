@@ -1,0 +1,28 @@
+# Flesch-OS Flatpaks
+# Werden beim ersten Login automatisch installiert
+
+# ── Browser ──────────────────────────────────────────────────────────────────
+com.vivaldi.Vivaldi
+
+# ── Kommunikation & Produktivität ────────────────────────────────────────────
+org.telegram.desktop
+md.obsidian.Obsidian
+notion.id.Notion
+dev.ferdium.Ferdium
+io.github.nodsoft.Filebot
+
+# ── Gaming ───────────────────────────────────────────────────────────────────
+com.heroicgameslauncher.hgl
+net.davidotek.pupgui2
+
+# ── System & Tools ───────────────────────────────────────────────────────────
+com.github.tchx84.Flatseal
+io.github.lainsce.Colorway
+org.kde.filelight
+com.github.unrud.VideoDownloader
+
+# ── Media ────────────────────────────────────────────────────────────────────
+org.videolan.VLC
+
+# ── Nvidia ───────────────────────────────────────────────────────────────────
+com.leinardi.gwe

@@ -1,24 +1,59 @@
 #!/bin/bash
+# Flesch-OS build script
+# Hardware: AMD Ryzen 9 5950X + Nvidia RTX 4090
+# Desktop: KDE Plasma (Bazzite KDE)
 
 set -ouex pipefail
 
-### Install packages
+# ── RPM Packages (System-Level) ──────────────────────────────────────────────
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
+dnf5 install -y \
+    # Terminal
+    wezterm \
+    # Dateimanager
+    krusader \
+    # Media
+    vlc \
+    # Razer Hardware Support
+    openrazer-daemon \
+    polychromatic \
+    # Nvidia GPU Tools
+    corectrl \
+    # KDE Connect (Handy ↔ PC)
+    kdeconnect \
+    # Dev Tools
+    git \
+    nodejs \
+    # SSH Server
+    openssh-server \
+    # Gaming
+    lutris \
+    # System Tools
+    htop \
+    btop
 
-# this installs a package from fedora repos
-dnf5 install -y tmux 
+# ── Razer udev Rules ─────────────────────────────────────────────────────────
+gpasswd -a $USER plugdev 2>/dev/null || true
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+# ── SSH Server aktivieren ────────────────────────────────────────────────────
+systemctl enable sshd
 
-#### Example for enabling a System Unit File
+# ── VS Code (Microsoft Repo) ─────────────────────────────────────────────────
+rpm --import https://packages.microsoft.com/keys/microsoft.asc
+cat <<EOF > /etc/yum.repos.d/vscode.repo
+[code]
+name=Visual Studio Code
+baseurl=https://packages.microsoft.com/yumrepos/vscode
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+EOF
+dnf5 install -y code
 
-systemctl enable podman.socket
+# ── OpenClaw CLI ─────────────────────────────────────────────────────────────
+npm install -g openclaw
+
+# ── Flatpaks werden über flatpaks.txt installiert (post-install) ─────────────
+# Siehe: /usr/share/flesch-os/flatpaks.txt
+mkdir -p /usr/share/flesch-os
+cp /ctx/flatpaks.txt /usr/share/flesch-os/flatpaks.txt
