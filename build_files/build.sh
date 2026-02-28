@@ -36,7 +36,22 @@ dnf5 install -y \
 dnf5 -y copr disable wezfurlong/wezterm-nightly
 
 # ── OpenClaw CLI ──────────────────────────────────────────────────────────────
-npm install -g openclaw
+mkdir -p /opt/openclaw
+npm install --prefix /opt/openclaw openclaw
+ln -sf /opt/openclaw/node_modules/.bin/openclaw /usr/bin/openclaw
+
+# ── Deutsche Lokalisierung ────────────────────────────────────────────────────
+ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+echo "LANG=de_DE.UTF-8" > /etc/locale.conf
+echo "KEYMAP=de-latin1" > /etc/vconsole.conf
+cat <<EOF > /etc/X11/xorg.conf.d/00-keyboard.conf
+Section "InputClass"
+    Identifier "keyboard"
+    MatchIsKeyboard "on"
+    Option "XkbLayout" "de"
+    Option "XkbVariant" "nodeadkeys"
+EndSection
+EOF
 
 # ── SSH Server aktivieren ─────────────────────────────────────────────────────
 systemctl enable sshd
